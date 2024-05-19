@@ -1,0 +1,130 @@
+openapi: 3.0.1
+info:
+  title: Order API
+  version: '2.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /products:
+    get:
+      summary: GET Products based on type
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum:
+              - gadget
+              - book
+              - food
+              - other
+          examples:
+            GET_PRODUCTS:
+              value: 'gadget'
+      responses:
+        "200":
+          description: List of products in the response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+              examples:
+                GET_PRODUCTS:
+                  value:
+                    - id: 1
+                      name: 'XYZ Phone'
+                      type: 'gadget'
+                      inventory: 2
+    post:
+      summary: POST /products
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductDetails'
+            examples:
+              CREATE_PRODUCT:
+                value:
+                  name: iPhone
+                  type: gadget
+                  inventory: 100
+      responses:
+        "200":
+          description: POST /products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductId'
+              examples:
+                CREATE_PRODUCT:
+                  value:
+                    id: 1
+
+components:
+  schemas:
+    ProductDetails:
+      title: Product Details
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/ProductType'
+        inventory:
+          type: integer
+      required:
+        - name
+        - type
+        - inventory
+    ProductType:
+      type: string
+      title: Product Type
+      enum:
+        - book
+        - food
+        - gadget
+        - other
+    ProductId:
+      title: Product Id
+      type: object
+      properties:
+        id:
+          type: integer
+      required:
+        - id
+    Product:
+      title: Product
+      allOf:
+        - $ref: '#/components/schemas/ProductId'
+        - $ref: '#/components/schemas/ProductDetails'
+    Products_RequestBody:
+      required:
+        - inventory
+        - name
+        - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - gadget
+            - book
+            - food
+            - other
+        inventory:
+          type: number
+    ErrorResponseBody:
+      properties:
+        id:
+          type: number
+        timestamp:
+          type: string
+        status:
+          type: number
+        error:
+          type: string
+        message:
+          type: string

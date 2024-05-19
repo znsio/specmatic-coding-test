@@ -1,0 +1,10 @@
+{
+  "sources": [
+    {
+      "provider": "filesystem",
+      "test": [
+        "products_api.yaml"
+      ]
+    }
+  ]
+}
