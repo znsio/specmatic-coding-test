@@ -1,15 +1,13 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Java CI with Maven
+name: CI Pipeline
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  repository_dispatch:
-    types: contracts changed
 jobs:
   build:
     strategy:
@@ -28,9 +26,4 @@ jobs:
         java-version: ${{ matrix.java }}
     - name: Build with Maven
       working-directory: main
-      run: mvn test package jacoco:report
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: jacoco coverage report
-        path: /home/runner/work/specmatic-api-coding-test/specmatic-api-coding-test/main/target/site/jacoco
+      run: mvn test

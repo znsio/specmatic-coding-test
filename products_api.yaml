@@ -37,6 +37,12 @@ paths:
                       name: 'XYZ Phone'
                       type: 'gadget'
                       inventory: 2
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
     post:
       summary: POST /products
       requestBody:
@@ -51,7 +57,7 @@ paths:
                   type: gadget
                   inventory: 100
       responses:
-        "200":
+        "201":
           description: POST /products
           content:
             application/json:
@@ -61,6 +67,12 @@ paths:
                 CREATE_PRODUCT:
                   value:
                     id: 1
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
 
 components:
   schemas:
@@ -117,14 +129,14 @@ components:
         inventory:
           type: number
     ErrorResponseBody:
+      type: object
       properties:
-        id:
-          type: number
         timestamp:
           type: string
+          format: date-time
         status:
-          type: number
+          type: integer
         error:
           type: string
-        message:
+        path:
           type: string
