@@ -111,23 +111,6 @@ components:
       allOf:
         - $ref: '#/components/schemas/ProductId'
         - $ref: '#/components/schemas/ProductDetails'
-    Products_RequestBody:
-      required:
-        - inventory
-        - name
-        - type
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-            - gadget
-            - book
-            - food
-            - other
-        inventory:
-          type: number
     ErrorResponseBody:
       type: object
       properties:
