@@ -4,6 +4,4 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
-open class Products {
-
-}
+class Products

@@ -1,4 +1,4 @@
-package com.store;
+package com.store
 
 import `in`.specmatic.test.SpecmaticContractTest
 import org.junit.jupiter.api.AfterAll
@@ -15,9 +15,9 @@ class ContractTest : SpecmaticContractTest {
         @JvmStatic
         @BeforeAll
         fun setUp() {
-            System.setProperty("host", "localhost");
-            System.setProperty("port", "8090");
-            System.setProperty("endpointsAPI", "http://localhost:8090/actuator/mappings");
+            System.setProperty("host", "localhost")
+            System.setProperty("port", "8090")
+            System.setProperty("endpointsAPI", "http://localhost:8090/actuator/mappings")
 
             context = SpringApplication.run(Application::class.java)
         }
@@ -25,7 +25,7 @@ class ContractTest : SpecmaticContractTest {
         @JvmStatic
         @AfterAll
         fun tearDown() {
-            context.close();
+            context.close()
         }
     }
 }
