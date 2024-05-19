@@ -28,9 +28,9 @@ Your objective is to get all the tests to pass by following the rest of the inst
 - This is a Kotlin based Spring Boot application.  
 - You are expected to implement the missing endpoints in the **Products** controller.
 
-### Note:
+#### Note:
 - You are **not** expected to use a database. Instead, use an in memory map to store and retrieve products.
-
+- Feel free to leverage GPT or Github Copilot.
 - Please do not alter the following files:
   - ContractTest.kt
   - products_api.yaml
