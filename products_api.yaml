@@ -37,8 +37,15 @@ paths:
                       name: 'XYZ Phone'
                       type: 'gadget'
                       inventory: 2
+                      cost: 20.10
         "400":
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
+        "404":
+          description: Not Found
           content:
             application/json:
               schema:
@@ -56,6 +63,7 @@ paths:
                   name: iPhone
                   type: gadget
                   inventory: 100
+                  cost: 30.99
       responses:
         "201":
           description: POST /products
@@ -73,6 +81,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponseBody'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseBody'
 
 components:
   schemas:
@@ -86,10 +100,13 @@ components:
           $ref: '#/components/schemas/ProductType'
         inventory:
           type: integer
+        cost:
+          type: number
       required:
         - name
         - type
         - inventory
+        - cost
     ProductType:
       type: string
       title: Product Type
