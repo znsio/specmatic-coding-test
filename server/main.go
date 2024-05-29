@@ -61,7 +61,7 @@ func main() {
 
 			err := json.NewDecoder(r.Body).Decode(&productDetails)
 
-			if productDetails["name"] == nil || productDetails["type"] == nil || productDetails["inventory"] == nil || err != nil {
+			if productDetails["name"] == nil || productDetails["type"] == nil || productDetails["inventory"] == nil || productDetails["cost"] == nil || err != nil {
 				errorResponse := &models.ErrorResponseBody{Timestamp: time.Now().Format(time.RFC3339), Status: http.StatusBadRequest, Error: "Bad Request", Path: "/products"}
 				errResStr, _ := json.Marshal(errorResponse)
 

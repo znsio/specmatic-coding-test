@@ -5,12 +5,14 @@ type Product struct {
 	Name      string      `json:"name"`
 	Type      ProductType `json:"type"`
 	Inventory int         `json:"inventory"`
+	Cost      int         `json:"cost"`
 }
 
 type ProductDetails struct {
 	Name      string      `json:"name"`
 	Type      ProductType `json:"type"`
 	Inventory int         `json:"inventory"`
+	Cost      int         `json:"cost"`
 }
 
 type ProductType string
