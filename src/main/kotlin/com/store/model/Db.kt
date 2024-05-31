@@ -11,6 +11,13 @@ object DB {
         PRODUCTS[product.id] = product
     }
 
+    private fun inventoryStatus(productid: Int): String {
+        return when (PRODUCTS.getValue(productid).inventory) {
+            0 -> "sold"
+            else -> "available"
+        }
+    }
+
     fun findProducts(name: String?, type: String?, status: String?): List<Product> {
         if (type != null && type !in listOf("book", "food", "gadget", "other"))
             throw UnrecognizedTypeException(type)
