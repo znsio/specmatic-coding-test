@@ -1,110 +1,61 @@
 package controller
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
+	"server/data"
 	"server/models"
-	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
-func GetProducts(r *http.Request, w http.ResponseWriter, data []models.Product) {
-	queryVar := r.URL.Query()
-	productType := queryVar.Get("type")
+func GetProducts(context *gin.Context) {
+	productType := context.Query("type")
+
+	if !models.IsValidProductType(productType) {
+		errorResponse := models.ErrorResponse(400, "Bad Request", "/products")
+		context.JSON(http.StatusBadRequest, errorResponse)
+		return
+	}
 
 	if productType == "" {
 		response := []models.Product{}
 
-		for i := 0; i < len(data); i++ {
-			if data[i].Type != "" {
-				response = append(response, data[i])
+		for i := 0; i < len(data.Data); i++ {
+			if data.Data[i].Type != "" {
+				response = append(response, data.Data[i])
 			}
 		}
-		w.Header().Set("Content-Type", "application/json")
 
-		responseStr, _ := json.Marshal(response)
-
-		fmt.Fprintf(w, string(responseStr))
+		context.JSON(http.StatusOK, response)
 		return
-
-	} else if productType != models.Book.String() && productType != models.Food.String() && productType != models.Gadget.String() && productType != models.Other.String() {
-
-		errorResponse := &models.ErrorResponseBody{Timestamp: time.Now().Format(time.RFC3339), Status: http.StatusBadRequest, Error: "Bad Request", Path: "/products"}
-		errResStr, _ := json.Marshal(errorResponse)
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, string(errResStr))
-		return
-
 	}
 
 	response := []models.Product{}
-	for i := 0; i < len(data); i++ {
-		if data[i].Type == models.ProductType(productType) {
-			response = append(response, data[i])
+
+	for i := 0; i < len(data.Data); i++ {
+		if data.Data[i].Type == productType {
+			response = append(response, data.Data[i])
 		}
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	responseStr, _ := json.Marshal(response)
-
-	fmt.Fprintf(w, string(responseStr))
+	context.JSON(http.StatusOK, response)
 }
 
-func AddProduct(r *http.Request, w http.ResponseWriter, data []models.Product, idCounter int) {
-	productDetails := make(map[string]interface{})
-	productDetailsStruct := &models.ProductDetails{}
-	err := json.NewDecoder(r.Body).Decode(&productDetails)
+func AddProduct(context *gin.Context) {
+	product := &models.Product{}
 
-	if productDetails["name"] == nil || productDetails["type"] == nil || productDetails["inventory"] == nil || productDetails["cost"] == nil || err != nil {
-
-		errorResponse := &models.ErrorResponseBody{Timestamp: time.Now().Format(time.RFC3339), Status: http.StatusBadRequest, Error: "Bad Request", Path: "/products"}
-		errResStr, _ := json.Marshal(errorResponse)
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, string(errResStr))
-		return
-
-	}
-
-	byteArr, err := json.Marshal(productDetails)
+	err := context.ShouldBind(&product)
 	if err != nil {
-
-		errorResponse := &models.ErrorResponseBody{Timestamp: time.Now().Format(time.RFC3339), Status: http.StatusBadRequest, Error: "Bad Request", Path: "/products"}
-		errResStr, _ := json.Marshal(errorResponse)
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, string(errResStr))
+		errorResponse := models.ErrorResponse(400, "Bad Request", "/products")
+		context.JSON(http.StatusBadRequest, errorResponse)
 		return
-
 	}
 
-	err = json.Unmarshal(byteArr, productDetailsStruct)
-	if err != nil {
+	product.Id = data.IdCounter
+	data.Data = append(data.Data, *product)
 
-		errorResponse := &models.ErrorResponseBody{Timestamp: time.Now().Format(time.RFC3339), Status: http.StatusBadRequest, Error: "Bad Request", Path: "/products"}
-		errResStr, _ := json.Marshal(errorResponse)
+	response := &models.ProductId{Id: data.IdCounter}
+	data.IdCounter++
 
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, string(errResStr))
-		return
-
-	}
-
-	product := &models.Product{Id: idCounter, Name: productDetailsStruct.Name, Type: productDetailsStruct.Type, Inventory: productDetailsStruct.Inventory}
-	data = append(data, *product)
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-
-	response := &models.ProductId{Id: idCounter}
-	responseStr, _ := json.Marshal(response)
-
-	idCounter++
-
-	fmt.Fprintf(w, string(responseStr))
+	context.JSON(http.StatusCreated, response)
 }

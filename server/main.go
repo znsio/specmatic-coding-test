@@ -1,22 +1,16 @@
 package main
 
 import (
-	"log"
-	"net/http"
 	"server/controller"
-	"server/models"
+
+	"github.com/gin-gonic/gin"
 )
 
-var data []models.Product
-var idCounter int = 0
-
 func main() {
-	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodGet {
-			controller.GetProducts(r, w, data)
-		} else if r.Method == http.MethodPost {
-			controller.AddProduct(r, w, data, idCounter)
-		}
-	})
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	var router *gin.Engine = gin.Default()
+
+	router.GET("/products", controller.GetProducts)
+	router.POST("/products", controller.AddProduct)
+
+	router.Run(":8080")
 }
