@@ -13,7 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 class GlobalExceptionController {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleValidationExceptions(ex: MethodArgumentNotValidException): ResponseEntity<Map<String, String?>> {
+    fun handleValidationExceptions(): ResponseEntity<Map<String, String?>> {
         val error = mapOf("error" to "validation on request fields failed")
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
     }
@@ -27,7 +27,7 @@ class GlobalExceptionController {
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
-    fun handleIllegalArgumentException(ex: IllegalArgumentException): ResponseEntity<Map<String, String>> {
+    fun handleIllegalArgumentException(): ResponseEntity<Map<String, String>> {
         val error = mapOf("error" to "Invalid argument type")
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
     }
