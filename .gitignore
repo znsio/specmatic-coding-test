@@ -6,3 +6,5 @@ lib/*
 *.idea
 .specmatic
 .vscode/*
+
+build/reports/specmatic/
