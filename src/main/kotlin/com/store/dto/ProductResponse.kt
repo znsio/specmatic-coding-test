@@ -1,7 +1,15 @@
 package com.store.dto
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import com.store.domain.Product
 
 data class ProductResponse(
-    @JsonProperty("id") val id:Int,
-)
+    val id: Int,
+) {
+    companion object {
+        fun from(product: Product): ProductResponse {
+            return ProductResponse(
+                id = product.id!!
+            )
+        }
+    }
+}
