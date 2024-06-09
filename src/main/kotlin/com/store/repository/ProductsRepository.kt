@@ -14,4 +14,8 @@ class ProductsRepository {
         productMap[counter++] = product
         return product
     }
+
+    fun get(type: String?): List<Product> {
+        return productMap.values.filter { it.type == (type ?: it.type) }
+    }
 }
