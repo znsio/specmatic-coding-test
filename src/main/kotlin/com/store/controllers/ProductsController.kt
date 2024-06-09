@@ -11,16 +11,17 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 
 @RestController
 @RequestMapping("/products")
 class ProductsController(@Autowired private val productService: ProductsService) {
 
-        @PostMapping
-        fun save(@RequestBody request: ProductSaveRequest): ResponseEntity<ProductResponse> {
-            val product = Product(name = request.name, type = request.type, inventory = request.inventory)
-            val response = ProductResponse(id = productService.save(product).id!!)
-            return ResponseEntity(response, HttpStatus.CREATED)
-        }
+    @PostMapping
+    fun save(@Valid @RequestBody request: ProductSaveRequest): ResponseEntity<ProductResponse> {
+        return productService.save(request.toProject())
+            .let { ProductResponse.from(it) }
+            .let { ResponseEntity(it, HttpStatus.CREATED) }
+    }
 }
