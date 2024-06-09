@@ -6,6 +6,7 @@ import com.store.models.Type
 import com.store.service.ProductService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 
 @RestController
@@ -20,7 +21,7 @@ class Products(
 
     @PostMapping("/products")
     @ResponseStatus(HttpStatus.CREATED)
-    fun create( @RequestBody productDetails: ProductDetails) : ProductCreationResponse {
+    fun create( @RequestBody @Valid productDetails: ProductDetails) : ProductCreationResponse {
               return ProductCreationResponse(productService.add(productDetails))
     }
 }
