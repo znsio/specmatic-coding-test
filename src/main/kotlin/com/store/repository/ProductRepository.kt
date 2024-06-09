@@ -9,10 +9,10 @@ class ProductRepository {
     companion object {
         var id = 1
         val productDetailsLists = mutableListOf(
-                ProductDetails( "XYZ Phone",2, type = Type.gadget),
-                ProductDetails( "ABC Book", 4, type = Type.book),
-                ProductDetails( "Pizza", 7, type =  Type.food),
-                ProductDetails( "watch", 12, type = Type.gadget),
+                ProductDetails("XYZ Phone", 2, type = Type.gadget, 123),
+                ProductDetails("ABC Book", 4, type = Type.book, 21),
+                ProductDetails("Pizza", 7, type =  Type.food, 33),
+                ProductDetails("watch", 12, type = Type.other, 100),
         );
     }
 

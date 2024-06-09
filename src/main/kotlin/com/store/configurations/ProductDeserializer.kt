@@ -33,7 +33,14 @@ class ProductDeserializer : JsonDeserializer<ProductDetails>() {
                 else {
                         throw ProductDetailsException(message = "Invalid Int")
                 }
-            return ProductDetails(name, inventory, type)
+            val costNode = node.get("cost")
+             val cost = if (costNode.isInt) {
+                 inventoryNode.asInt()
+            }
+            else {
+                throw ProductDetailsException(message = "Invalid Int")
+            }
+            return ProductDetails(name, inventory, type, cost)
         } catch (e: Exception) {
             throw ProductDetailsException(message = e.localizedMessage)
         }

@@ -17,7 +17,8 @@ data class ProductDetails(
         @JsonProperty("inventory")
         val inventory: Int,
         @JsonProperty("type")
-        val type: Type
+        val type: Type,
+        val cost: Int
 ) {
 
     @JsonProperty("id")
