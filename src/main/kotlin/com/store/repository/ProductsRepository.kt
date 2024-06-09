@@ -5,12 +5,13 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class ProductsRepository {
-    private val productMap:MutableMap<String, Product> = mutableMapOf()
+    // performance can be improved making it map<String, list<Product>> storing based on type as query is done on type
+    private val productMap = mutableMapOf<Int, Product>()
     private var counter = 1
 
     fun save(product: Product): Product {
-        product.id = counter++
-        productMap[product.name] = product
-        return productMap[product.name]!!
+        product.id = counter
+        productMap[counter++] = product
+        return product
     }
 }
