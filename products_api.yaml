@@ -3,7 +3,8 @@ info:
   title: Order API
   version: '2.0'
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:8090'
+    description: Local server
 paths:
   /products:
     get:
@@ -37,6 +38,7 @@ paths:
                       name: 'XYZ Phone'
                       type: 'gadget'
                       inventory: 2
+                      cost: 40.0
         "400":
           description: Bad Request
           content:
@@ -56,6 +58,7 @@ paths:
                   name: iPhone
                   type: gadget
                   inventory: 100
+                  cost: 1000.0
       responses:
         "201":
           description: POST /products
@@ -86,10 +89,13 @@ components:
           $ref: '#/components/schemas/ProductType'
         inventory:
           type: integer
+        cost:
+          type: number
       required:
         - name
         - type
         - inventory
+        - cost
     ProductType:
       type: string
       title: Product Type
