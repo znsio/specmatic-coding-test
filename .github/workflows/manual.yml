@@ -27,3 +27,10 @@ jobs:
     - name: Build with Maven
       working-directory: main
       run: mvn test
+    - name: Publish Contract Test Report
+      run: mvn specmatic:report
+    - name: Upload Contract Test Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: contract-test-report
+        path: target/specmatic-report.html
