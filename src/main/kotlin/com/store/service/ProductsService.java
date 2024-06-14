@@ -20,6 +20,7 @@ public class ProductsService {
         newProduct.setInventory(productDetails.getInventory());
         newProduct.setName(productDetails.getName());
         newProduct.setType(productDetails.getType());
+        newProduct.setCost(productDetails.getCost());
 
         products.put(id, newProduct);
 

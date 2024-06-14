@@ -17,6 +17,10 @@ public class ProductDetails {
     @Min(1)
     private int inventory;
 
+    @NotNull
+    @Min(1)
+    private double cost;
+
     public String getName() {
         return name;
     }
@@ -41,12 +45,21 @@ public class ProductDetails {
         this.inventory = inventory;
     }
 
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
     @Override
     public String toString() {
         return "ProductDetails{" +
                 "name=" + name  +
                 ", type=" + type +
                 ", inventory=" + inventory +
+                ", cost=" + cost +
                 '}';
     }
 }
