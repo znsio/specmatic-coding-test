@@ -225,18 +225,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>in.specmatic</groupId>
-                <artifactId>junit5-support</artifactId>
-                <version>${specmatic.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 </project>
