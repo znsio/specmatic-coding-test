@@ -27,9 +27,6 @@ jobs:
     - name: Build with Maven
       working-directory: main
       run: mvn test
-    - name: Generate site report
-      working-directory: main
-      run: mvn site
     - name: Upload test report as artifact
       if: always()
       uses: actions/upload-artifact@v3
