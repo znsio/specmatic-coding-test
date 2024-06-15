@@ -27,10 +27,11 @@ jobs:
     - name: Build with Maven
       working-directory: main
       run: mvn test
-    - name: Publish Contract Test Report
-      run: mvn specmatic:report
-    - name: Upload Contract Test Report
-      uses: actions/upload-artifact@v2
+    - name: Generate report
+      working-directory: main
+      run: mvn jacoco:report
+    - name: Publish report
+      uses: mikepenz/action-junit-report@v2
+      if: always()
       with:
-        name: contract-test-report
-        path: target/specmatic-report.html
+        report_paths: 'target/site/jacoco/index.html'
