@@ -27,18 +27,3 @@ jobs:
     - name: Build with Maven
       working-directory: main
       run: mvn test
-    - name: Upload test report as artifact
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-report
-        path: main/target/site  
-    - name: Deploy test report to GitHub Pages
-      if: success()
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: main/target/site
-        destination_dir: test-report
-    - name: Print site URL
-      run: echo "Test Report published at https://<USERNAME>.github.io/<REPO>/test-report"
