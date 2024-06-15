@@ -27,11 +27,22 @@ jobs:
     - name: Build with Maven
       working-directory: main
       run: mvn test
-    - name: Generate report
+    - name: Generate JaCoCo report
       working-directory: main
       run: mvn jacoco:report
-    - name: Publish report
-      uses: mikepenz/action-junit-report@v2
+    - name: Upload JaCoCo report
       if: always()
+      uses: actions/upload-artifact@v3
       with:
-        report_paths: 'target/site/jacoco/index.html'
+        name: jacoco-report
+        path: main/target/site/jacoco
+    - name: Deploy contract test report to GitHub Pages
+      if: success()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: main/target/site/jacoco
+        destination_dir: jacoco-report
+    - name: Print site URL
+      run: echo "JaCoCo Test Report published at https://<USERNAME>.github.io/<REPO>/jacoco-report"
+
