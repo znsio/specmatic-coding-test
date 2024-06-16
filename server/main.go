@@ -10,7 +10,7 @@ func main() {
 	var router *gin.Engine = gin.Default()
 
 	router.GET("/products", controller.GetProducts)
-	router.POST("/products", controller.AddProduct)
+	// router.POST("/products", controller.AddProduct)
 
 	router.Run(":8080")
 }
