@@ -12,12 +12,7 @@ paths:
         - name: type
           in: query
           schema:
-            type: string
-            enum:
-              - gadget
-              - book
-              - food
-              - other
+            $ref: '#/components/schemas/ProductType'
           examples:
             GET_PRODUCTS:
               value: 'gadget'
