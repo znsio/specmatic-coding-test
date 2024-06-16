@@ -23,7 +23,3 @@ func IsValidProductType(product string) bool {
 
 	return false
 }
-
-type ProductId struct {
-	Id int `json:"id"`
-}
