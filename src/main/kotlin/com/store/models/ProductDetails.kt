@@ -10,10 +10,6 @@ data class ProductDetails @JsonCreator constructor(
     @JsonProperty("cost") val cost: Float
 )
 
-data class ProductId(
-    val id: Int
-)
-
 data class Product(
     val id: Int,
     val name: String,
