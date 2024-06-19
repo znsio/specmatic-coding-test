@@ -19,7 +19,6 @@ class ContractTest : SpecmaticJUnitSupport() {
             System.setProperty("port", "8090")
             System.setProperty("endpointsAPI", "http://localhost:8090/actuator/mappings")
             System.setProperty("SPECMATIC_GENERATIVE_TESTS", "true")
-            System.setProperty("TEST_ANNOTATIONS", "true")
 
             context = SpringApplication.run(Application::class.java)
         }

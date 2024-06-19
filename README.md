@@ -13,25 +13,26 @@ From a terminal, run the following command:
 ```bash
 mvn clean test
 ```
-You should see 38 failing tests:
+You should see 84 failing tests:
 ```bash
-[ERROR] Tests run: 38, Failures: 38, Errors: 0, Skipped: 0
+[ERROR] Tests run: 84, Failures: 84, Errors: 0, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
 ```
 
-#### VS Code Plugin Steps (Programming Lanugage Agnostic)
+#### VS Code Plugin Steps (Programming Language Agnostic)
 1. Install Specmatic VS Code Plugin
 2. Launch command pallet and type "Run Contract Tests", this should launch the Specmatic plugin
 3. In the Contract Test Settings screen, update the following:
   * Update API specification file to ./products_api.yaml
   * Select the checkbox for Generative tests
   * Click on the "Save and Run" button
-4. You should see 38 failing tests:
+4. You should see 84 failing tests:
+
 ```bash
-[ERROR] Tests run: 38, Failures: 38, Errors: 0, Skipped: 0
+[ERROR] Tests run: 84, Failures: 84, Errors: 0, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
@@ -61,21 +62,21 @@ Your objective is to get all the tests to pass by following the rest of the inst
   - specmatic.json
 
 #### Other Programming Languages Steps
-- Any your choise of programming language and Web API framework.
+- Pick any programming language and Web API framework of your choice.
 - You are expected to implement the missing endpoints.
 
 ### 4. Part 1 - Definition of Done
-- All 38 tests are passing
+- All 84 tests are passing
 - 100% API Coverage from 1 path is achieved
 - Code changes are committed to your Github repo.
 
 ### 5. Part 2 - Added mandatory property 'cost' to the ProductDetails schema
 - Update the products_api.yaml OpenAPI specification such that 'cost' is added as a new mandatory property to ProductDetails
-- This will increase the test count to 50 and cause a few tests to fail
+- This will increase the test count to 197 and cause a few tests to fail
 - Update your kotlin code to make all the tests pass again.
 
 ### 6. Part 2 - Definition of Done
-- All 50 tests are passing
+- All 197 tests are passing
 - 100% API Coverage is still maintained
 - Code changes are committed to your Github repo.
 
