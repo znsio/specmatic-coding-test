@@ -1,7 +1,7 @@
 # Specmatic Coding Test
 
 ### Prerequisites:
-JDK 17+ OR [Specmatic VS Code Plugin](https://specmatic.in/#extension) 
+JDK 17+ OR Specmatic IDE Plugin
 
 ### Instructions:
 
@@ -24,8 +24,8 @@ You should see 84 failing tests:
 [INFO] ------------------------------------------------------------------------
 ```
 
-#### VS Code Plugin Steps (Programming Language Agnostic)
-1. Install Specmatic VS Code Plugin
+#### IDE Plugin Steps (Programming Language Agnostic)
+1. Install [Specmatic VS Code Extension](https://marketplace.visualstudio.com/items?itemName=Specmatic.specmatic-vscode-extension) or [Jetbrains IDEs Plugin](https://plugins.jetbrains.com/plugin/24548-specmatic)
 2. Launch command pallet and type "Run Contract Tests", this should launch the Specmatic plugin
 3. In the Contract Test Settings screen, update the following:
   * Update API specification file to ./products_api.yaml
