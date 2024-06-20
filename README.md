@@ -7,6 +7,8 @@ JDK 17+ OR [Specmatic VS Code Plugin](https://specmatic.in/#extension)
 
 ### 1. Fork this repository on Github. Checkout your forked repo to your local machine.  
 
+**DO NOT RAISE A PR AND SHARE YOUR SOLUTION WITH THE WORLD**
+
 #### Java/Kotlin Steps
 
 From a terminal, run the following command:
