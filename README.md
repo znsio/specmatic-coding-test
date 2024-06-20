@@ -86,3 +86,45 @@ Your objective is to get all the tests to pass by following the rest of the inst
   - Screenshot of passing CI pipeline
   - Screenshot of API Coverage report
   - Link to you github repo
+
+### 8. Judging Criteria
+- All 197 tests are passing in the Github Actions (CI pipeline)
+- 100% API Coverage
+- **3 Design Values** are met:
+  - Communication
+  - Simplicity
+  - Flexibility
+- **Kent Beck's 4 Rules of Simple Design** are followed:
+  - Passes the tests (197 Contract Tests + Bonus points if you write unit tests)
+  - Reveals intention (Self-documenting and expressive code)
+  - No duplication (Avoid any form of duplication - Literal, Semantic, Structural or Data)
+  - Fewest elements (Minimalistic Code - No combinatorial explosion)
+- **XP Principles**
+  - YAGNI - You Aren't Gonna Need It
+  - KISS - Keep It Simple, Stupid
+  - Triangulate
+  - DRY - Don't Repeat yourself
+- Make sure you adhere to your Programming Pradigm specific Design Principles:
+  - **Object Oriented**
+    - Single Responsibility Principle (SRP) 
+    - Open Closed Principle (OCP)
+    - Liskov Substitution Principle (LSP)
+    - Interface Segregation Principle (ISP)
+    - Dependency Inversion Principle (DIP)
+    - Once and Only Once
+    - TDA - Tell Don't Ask
+    - The Law of Demeter
+  - **Functional Programming**
+    - First-Class and Higher-Order Functions
+    - Pure, Side-Effect Free Functions
+      - Idempotence
+      - Thread-safe Evaluation and Parallelism
+      - Deforestation - Transforming programs to eliminate trees
+      - Immutability
+      - Referential Transparency
+    - Declarative Programming
+    - Tackling complexity by composing functions
+      - Curry / Partial Functional Application
+      - Point-free Programming
+    - Using Monads to DRY the code
+    - Being efficient by being lazy
