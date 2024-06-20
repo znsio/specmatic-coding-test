@@ -89,6 +89,8 @@ Your objective is to get all the tests to pass by following the rest of the inst
   - Screenshot of API Coverage report
   - Link to you github repo
 
+### _If you like Specmatic, please give us a star on GitHub!_ [![GitHub Repo stars](https://img.shields.io/github/stars/znsio/specmatic?logo=GitHub)](https://github.com/znsio/specmatic/stargazers)
+
 ### 8. Judging Criteria
 - All 197 tests are passing in the Github Actions (CI pipeline)
 - 100% API Coverage
