@@ -35,6 +35,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
             <version>${spring.boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
@@ -43,7 +49,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -224,6 +229,40 @@
                         <exclude>**/APIKeyAuthFilter.*</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>application.SpecmaticApplication</mainClass>
+                    <arguments>
+                        <argument>compatible</argument>
+                        <argument>git</argument>
+                        <argument>file</argument>
+                        <argument>products_api.yaml</argument>
+                    </arguments>
+                    <includePluginDependencies>true</includePluginDependencies>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>in.specmatic</groupId>
+                        <artifactId>junit5-support</artifactId>
+                        <version>${specmatic.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>in.specmatic</groupId>
+                        <artifactId>specmatic-executable</artifactId>
+                        <version>${specmatic.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

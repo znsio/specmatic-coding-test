@@ -12,11 +12,11 @@ JDK 17+ OR Specmatic IDE Plugin
 #### Java/Kotlin Steps
 
 From a terminal, run the following command:
-```bash
+```shell
 mvn clean test
 ```
 You should see 84 failing tests:
-```bash
+```
 [ERROR] Tests run: 84, Failures: 84, Errors: 0, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
@@ -33,7 +33,7 @@ You should see 84 failing tests:
   * Click on the "Save and Run" button
 4. You should see 84 failing tests:
 
-```bash
+```
 [ERROR] Tests run: 84, Failures: 84, Errors: 0, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
@@ -72,17 +72,26 @@ Your objective is to get all the tests to pass by following the rest of the inst
 - 100% API Coverage from 1 path is achieved
 - Code changes are committed to your Github repo.
 
-### 5. Part 2 - Added mandatory property 'cost' to the ProductDetails schema
-- Update the products_api.yaml OpenAPI specification such that 'cost' is added as a new mandatory property to ProductDetails
+### 5. Part 2 - Added property 'cost' to the ProductDetails schema
+- Update the products_api.yaml OpenAPI specification such that 'cost' is added as a new property to ProductDetails
 - This will increase the test count to 197 and cause a few tests to fail
 - Update your kotlin code to make all the tests pass again.
 
-### 6. Part 2 - Definition of Done
+### 6. Part 2 - Ensure Backward Compatibility is not broken
+```shell
+mvn exec:java
+```
+You should see:
+```
+The newer contract is backward compatible
+```
+
+### 7. Part 2 - Definition of Done
 - All 197 tests are passing
 - 100% API Coverage is still maintained
 - Code changes are committed to your Github repo.
 
-### 7. Trigger the CI pipeline under Github Actions. 
+### 8. Trigger the CI pipeline under Github Actions. 
 - Make sure all tests are passing on the pipeline as well.
 - Email the following details to coding.test@specmatic.in:
   - Screenshot of passing CI pipeline
@@ -91,7 +100,7 @@ Your objective is to get all the tests to pass by following the rest of the inst
 
 ### _If you like Specmatic, please give us a star on GitHub!_ [![GitHub Repo stars](https://img.shields.io/github/stars/znsio/specmatic?logo=GitHub)](https://github.com/znsio/specmatic/stargazers)
 
-### 8. Judging Criteria
+### 9. Judging Criteria
 - All 197 tests are passing in the Github Actions (CI pipeline)
 - 100% API Coverage
 - **3 Design Values** are met:
