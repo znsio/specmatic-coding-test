@@ -1,5 +1,6 @@
 package com.store.controllers;
 
+import com.store.controllers.exceptions.InvalidProductTypeException;
 import com.store.model.*;
 import com.store.service.ProductsService;
 import org.slf4j.Logger;
@@ -13,54 +14,48 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
 public class ProductsController {
-    private ProductsService productsService = new ProductsService();
+    private final ProductsService productsService = new ProductsService();
     private static final Logger logger = LoggerFactory.getLogger(ProductsController.class);
 
     public ProductsController() {
     }
 
     @GetMapping
-    public ResponseEntity<?> getProducts(@RequestParam(required = false) String type) {
+    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) String type) throws InvalidProductTypeException {
+        ProductType productType = null;
         if (type != null) {
-            ProductType productType;
             try {
                 productType = ProductType.valueOf(type.toLowerCase());
-                logger.info("hey productType:" + productType);
             } catch (IllegalArgumentException e) {
                 logger.error("Invalid product type: {}", type, e);
-                ErrorResponseBody errorResponse = new ErrorResponseBody();
-                errorResponse.setTimestamp(LocalDateTime.now());
-                errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
-                errorResponse.setError("Invalid product type");
-                errorResponse.setPath(ServletUriComponentsBuilder.fromCurrentRequest().toUriString());
-                return ResponseEntity.badRequest().body(errorResponse);
+                throw new InvalidProductTypeException("Invalid product type", e);
             }
-
-            List<Product> products = productsService.getProducts(productType);
-            logger.info("Retrieved products of type: {}", type);
-            return ResponseEntity.ok(products);
-        } else {
-            List<Product> products = productsService.getProducts(null);
-            logger.info("Retrieved all products");
-            return ResponseEntity.ok(products);
         }
+
+        List<Product> products = productsService.getProducts(Optional.ofNullable(productType));
+        logger.info("Retrieved products of type: {}", type);
+        return ResponseEntity.ok(products);
     }
 
     @PostMapping
-    public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDetails productDetails) {
-        if (productDetails.getName() == null || productDetails.getType() == null || productDetails.getInventory() <= 0) {
-            throw new IllegalArgumentException("Invalid product details");
-        }
-
+    public ResponseEntity<ProductId> createProduct(@Valid @RequestBody ProductDetails productDetails){
         ProductId newProductId = productsService.createProduct(productDetails);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(newProductId.getId())
+                .buildAndExpand(newProductId)
                 .toUri();
         return ResponseEntity.created(location).body(newProductId);
+    }
+
+    @ExceptionHandler({InvalidProductTypeException.class})
+    public ResponseEntity<ErrorResponseBody> handleException(RuntimeException e) {
+        ErrorResponseBody errorResponse = new ErrorResponseBody(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                e.getMessage(), ServletUriComponentsBuilder.fromCurrentRequest().toUriString());
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 }

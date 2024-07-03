@@ -6,13 +6,9 @@ public enum ProductType {
     gadget("gadget"),
     other("other");
 
-    private String value;
+    public final String value;
 
     ProductType(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 }

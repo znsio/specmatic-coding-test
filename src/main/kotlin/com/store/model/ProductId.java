@@ -1,13 +1,9 @@
 package com.store.model;
 
 public class ProductId {
-    private int id;
+    public final int id;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    public ProductId(int id) {
         this.id = id;
     }
 }
