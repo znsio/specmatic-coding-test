@@ -11,10 +11,10 @@
     <description>Specmatic Coding Tests</description>
 
     <properties>
-        <kotlin.version>1.9.21</kotlin.version>
+        <kotlin.version>1.9.24</kotlin.version>
         <maven.compiler>1.8</maven.compiler>
-        <specmatic.version>1.3.19</specmatic.version>
-        <spring.boot.version>2.7.5</spring.boot.version>
+        <specmatic.version>1.3.31</specmatic.version>
+        <spring.boot.version>3.3.0</spring.boot.version>
         <mockk.version>1.13.9</mockk.version>
     </properties>
 
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>2.7.5</version>
+            <version>${spring.boot.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>
@@ -35,6 +35,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
             <version>${spring.boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
@@ -43,7 +49,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -70,14 +75,14 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.5.2</version>
+            <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.5.2</version>
+            <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -154,7 +159,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <jvmTarget>1.8</jvmTarget>
+                    <jvmTarget>17</jvmTarget>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -224,6 +229,40 @@
                         <exclude>**/APIKeyAuthFilter.*</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>application.SpecmaticApplication</mainClass>
+                    <arguments>
+                        <argument>compatible</argument>
+                        <argument>git</argument>
+                        <argument>file</argument>
+                        <argument>products_api.yaml</argument>
+                    </arguments>
+                    <includePluginDependencies>true</includePluginDependencies>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>in.specmatic</groupId>
+                        <artifactId>junit5-support</artifactId>
+                        <version>${specmatic.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>in.specmatic</groupId>
+                        <artifactId>specmatic-executable</artifactId>
+                        <version>${specmatic.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
