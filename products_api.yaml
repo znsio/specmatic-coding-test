@@ -90,6 +90,8 @@ components:
           type: integer
         cost:
           type: number
+          minimum: 1
+          maximum: 9999
       required:
         - name
         - type
