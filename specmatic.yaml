@@ -1,4 +1,4 @@
 sources:
   - provider: filesystem
-    test:
+    provides:
       - products_api.yaml
