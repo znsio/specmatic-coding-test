@@ -1,13 +1,13 @@
 package com.store
 
-import `in`.specmatic.test.SpecmaticJUnitSupport
+import io.specmatic.test.SpecmaticContractTest
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.springframework.boot.SpringApplication
 import org.springframework.context.ConfigurableApplicationContext
 
 //DO NOT ALTER
-class ContractTest : SpecmaticJUnitSupport() {
+class ContractTest : SpecmaticContractTest {
     companion object {
 
         private lateinit var context: ConfigurableApplicationContext
