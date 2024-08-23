@@ -93,7 +93,7 @@ The newer contract is backward compatible
 
 ### 8. Trigger the CI pipeline under Github Actions. 
 - Make sure all tests are passing on the pipeline as well.
-- Email the following details to coding.test@specmatic.in:
+- Email the following details to coding.test@specmatic.io:
   - Screenshot of passing CI pipeline
   - Screenshot of API Coverage report
   - Link to you github repo
