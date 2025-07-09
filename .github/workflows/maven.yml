@@ -39,12 +39,13 @@ jobs:
       working-directory: main
       shell: bash
       env:
-        PORT: ":3000"
+        PORT: ":8090"
+        SPRING_MAIN_WEB_APPLICATION_TYPE: "none"
       run: |
         pushd go-service
         go run . &
         GO_PID=$!
         popd
         sleep 5
-        mvn -B test
+        mvn -B test -Dspring.main.web-application-type=none
         kill $GO_PID
