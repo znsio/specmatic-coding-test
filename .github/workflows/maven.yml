@@ -41,8 +41,10 @@ jobs:
       env:
         PORT: ":8090"
       run: |
-        go run ./go-service &
+        pushd go-service
+        go run . &
         GO_PID=$!
+        popd
         sleep 5
         mvn -B test
         kill $GO_PID
