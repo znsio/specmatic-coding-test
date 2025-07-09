@@ -47,5 +47,5 @@ jobs:
         GO_PID=$!
         popd
         sleep 5
-        mvn -B test -Dsurefire.forkCount=1 -Dsurefire.reuseForks=false -Djacoco.skip=true
+        mvn -B test -Dsurefire.forkCount=0 -Djacoco.skip=true
         kill $GO_PID
