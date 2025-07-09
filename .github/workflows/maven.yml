@@ -14,6 +14,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         java: [17]
+        go: [1.22]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
@@ -24,6 +25,24 @@ jobs:
       with:
         distribution: 'oracle'
         java-version: ${{ matrix.java }}
-    - name: Build with Maven
+    - name: Set up Go ${{ matrix.go }}
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ matrix.go }}
+        check-latest: true
+    - name: Build and Test Go Service
+      working-directory: main/go-service
+      run: |
+        go vet ./...
+        go test ./...
+    - name: Start Go Service and Run Contract Tests
       working-directory: main
-      run: mvn test
+      shell: bash
+      env:
+        PORT: ":8090"
+      run: |
+        go run ./go-service &
+        GO_PID=$!
+        sleep 5
+        mvn -B test
+        kill $GO_PID
