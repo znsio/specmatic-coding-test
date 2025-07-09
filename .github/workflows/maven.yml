@@ -8,6 +8,7 @@ on:
     branches: [ main, fix/workflow ]
   pull_request:
     branches: [ main ]
+# ... existing workflow ...
 jobs:
   build:
     strategy:
@@ -35,33 +36,30 @@ jobs:
       run: |
         go vet ./...
         go test ./...
-    - name: Start Go Service (Unix)
-      if: runner.os != 'Windows'
-      working-directory: main/go-service
-      shell: bash
-      run: |
-        nohup go run . > ../../go-service.log 2>&1 &
-        echo "GO_PID=$!" >> $GITHUB_ENV
-    - name: Start Go Service (Windows)
-      if: runner.os == 'Windows'
-      working-directory: main/go-service
-      shell: powershell
-      run: |
-        Start-Process -FilePath "go" -ArgumentList "run","." -WindowStyle Hidden -PassThru | Out-File -FilePath go_pid.txt
-        Start-Sleep -Seconds 5
-    - name: Run Contract Tests (Maven)
+    - name: Start Go Service and Run Contract Tests
       working-directory: main
-      shell: bash
-      run: mvn -B test
-    - name: Stop Go Service (Unix)
-      if: runner.os != 'Windows'
-      shell: bash
-      run: kill $GO_PID
-    - name: Stop Go Service (Windows)
-      if: runner.os == 'Windows'
-      working-directory: main/go-service
-      shell: powershell
+      shell: ${{ matrix.os == 'windows-latest' && 'pwsh' || 'bash' }}
+      env:
+        PORT: ":8090"
+        SERVER_PORT: "0"
       run: |
-        $pid = Get-Content go_pid.txt | ConvertFrom-Json | Select-Object -ExpandProperty Id
-        Stop-Process -Id $pid -Force
-        Remove-Item go_pid.txt
+        if ("${{ matrix.os }}" -eq "windows-latest") {
+          # Windows/PowerShell version
+          Set-Location go-service
+          Start-Process -NoNewWindow -FilePath "go" -ArgumentList "run ." -PassThru
+          $gopid = (Get-Process -Name "go*").Id
+          Set-Location ..
+          Start-Sleep -Seconds 10
+          # Increased memory + updated surefire version
+          mvn -B test -Dsurefire.version=3.2.5 -DargLine="-Xmx2048m" -Djacoco.skip=true
+          Stop-Process -Id $gopid -Force
+        } else {
+          # Linux/macOS version
+          pushd go-service
+          go run . &
+          GO_PID=$!
+          popd
+          sleep 10
+          mvn -B test -Dsurefire.version=3.2.5 -DargLine="-Xmx2048m" -Djacoco.skip=true
+          kill $GO_PID
+        }
