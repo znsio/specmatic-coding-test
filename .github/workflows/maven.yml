@@ -39,7 +39,7 @@ jobs:
       working-directory: main
       shell: bash
       env:
-        PORT: ":8090"
+        PORT: ":3000"
       run: |
         pushd go-service
         go run . &
