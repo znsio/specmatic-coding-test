@@ -1,3 +1,6 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
 name: CI Pipeline
 
 on:
@@ -5,7 +8,6 @@ on:
     branches: [ main, fix/workflow ]
   pull_request:
     branches: [ main ]
-
 jobs:
   build:
     strategy:
@@ -14,50 +16,36 @@ jobs:
         java: [17]
         go: [1.22]
     runs-on: ${{ matrix.os }}
-
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
       with:
         path: main
-
     - name: Set up JDK ${{ matrix.java }}
       uses: actions/setup-java@v4
       with:
         distribution: 'oracle'
         java-version: ${{ matrix.java }}
-
     - name: Set up Go ${{ matrix.go }}
       uses: actions/setup-go@v5
       with:
         go-version: ${{ matrix.go }}
         check-latest: true
-
     - name: Build and Test Go Service
       working-directory: main/go-service
       run: |
         go vet ./...
         go test ./...
-
-    - name: Run Go Service and Maven Tests on Unix
-      if: matrix.os != 'windows-latest'
+    - name: Start Go Service and Run Contract Tests
       working-directory: main
       shell: bash
+      env:
+        PORT: ":8090"
+        SERVER_PORT: "0"
       run: |
         pushd go-service
         go run . &
         GO_PID=$!
         popd
-        sleep 10
-        mvn -B test -Dsurefire.version=3.2.5 -DargLine="-Xmx2048m" -Djacoco.skip=true
+        sleep 5
+        mvn -B test -Dsurefire.forkCount=0 -Djacoco.skip=true
         kill $GO_PID
-
-    - name: Run Go Service and Maven Tests on Windows
-      if: matrix.os == 'windows-latest'
-      working-directory: main
-      shell: pwsh
-      run: |
-        Start-Process -NoNewWindow -FilePath "go" -ArgumentList "run", "." -WorkingDirectory ".\go-service" -PassThru | Out-Null
-        Start-Sleep -Seconds 10
-        mvn -B test -Dsurefire.version=3.2.5 -DargLine="-Xmx2048m" -Djacoco.skip=true
-        Get-Process go | Stop-Process -Force
