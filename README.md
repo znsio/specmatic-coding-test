@@ -24,13 +24,14 @@ You should see 84 failing tests:
 [INFO] ------------------------------------------------------------------------
 ```
 
-#### IDE Plugin Steps (Programming Language Agnostic)
-1. Install [Specmatic VS Code Extension](https://marketplace.visualstudio.com/items?itemName=Specmatic.specmatic-vscode-extension) or [Jetbrains IDEs Plugin](https://plugins.jetbrains.com/plugin/24548-specmatic)
-2. Launch command pallet and type "Run Contract Tests", this should launch the Specmatic plugin
-3. In the Contract Test Settings screen, update the following:
-  * Update API specification file to ./products_api.yaml
+#### Using Specmatic Studio steps
+1. Install Specmatic Studio(https://hub.docker.com/extensions/specmatic/specmatic-docker-desktop-extension)
+2. Load kafka.yaml and API specification file: ./products_api.yaml
+3. Launch kafka mock
+4. Launch the API specification 
+5. In the Test screen, update the following:
   * Select the checkbox for Generative tests
-  * Click on the "Save and Run" button
+  * Click on the "Run" button
 4. You should see 84 failing tests:
 
 ```
